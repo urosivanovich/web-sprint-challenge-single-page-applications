@@ -5,9 +5,12 @@ import Orders from "./Orders";
 import BuildPizza from "./BuildPizza";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import * as yup from 'yup'
+import formSchema from "./validation/formSchema";
+
 
 const initialOrders = []
-const initialDisabled = false
+const initialDisabled = true
 
 const initialFormValues = {
   name: '',
@@ -16,6 +19,7 @@ const initialFormValues = {
 //radio  
   sauce: '',
   // checkboxes
+  
   pepperoni: false,
   sausage: false,
   bacon: false,
@@ -24,7 +28,7 @@ const initialFormValues = {
   olives: false,
   extraCheese: false,
   //big text input
-    request: '',
+    special: '',
 }
 
 const initialFormErrors = {
@@ -41,36 +45,59 @@ const [formValues, setFormValues] = useState(initialFormValues)
 const [formErrors, setFormErrors] = useState(initialFormErrors)
 const [disabled, setDisabled] = useState(initialDisabled)
 
-const inputChange = (name, value) => {
-  setFormValues({...formValues, [name]: value})
-}
-
 const history = useHistory();
 
 const postNewOrder = newOrder => {
   axios.post('https://reqres.in/api/orders', newOrder)
   .then(resp => {
-      console.log(resp)
+      setOrders([resp.data, ...orders])
   })
   .catch(err => console.log(err))
-  .finally(() => setFormValues(initialFormValues))
+  setFormValues(initialFormValues)
   history.push('/Orders')
 }
 
 
+const validate = (name, value) => {
+  yup.reach(formSchema, name)
+  .validate(value)
+  .then(() => setFormErrors({...formErrors, [name]: ''}))
+  .catch(err => setFormErrors({...formErrors, [name]: err.errors[0]}))
+}
+
+
+const inputChange = (name, value) => {
+  validate(name, value) 
+  setFormValues({...formValues, [name]: value})
+}
+
+
+ 
 const formSubmit = () => {
   const newOrder = {
     name: formValues.name.trim(),
     size: formValues.size,
     sauce: formValues.sauce,
-    request: formValues.request,
+    special: formValues.special.trim(),
     toppings: ['pepperoni, sausage, bacon, mushrooms, artichoke, olives, extraCheese,']
     .filter(topping => formValues[topping])
   }
   postNewOrder(newOrder)
-  
 }
 
+
+
+
+
+
+
+useEffect(() =>{
+  
+},[orders])
+
+useEffect(() => {
+  formSchema.isValid(formValues).then(valid => setDisabled(!valid))
+}, [formValues])
 
 
  return (

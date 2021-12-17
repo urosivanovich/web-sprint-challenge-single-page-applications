@@ -1,5 +1,4 @@
 import React from "react"
-import { useHistory } from 'react-router-dom'
 
 
 const BuildPizza = (props) => {
@@ -7,12 +6,11 @@ const BuildPizza = (props) => {
         values,submit,change,disabled,errors
     } = props
 
-const history = useHistory()
 
 const onSubmit = evt => {
     evt.preventDefault()
-    submit()
-    // history.push('/orders')
+    submit(onSubmit)
+   
 }
 
 const onChange = evt => {
@@ -51,6 +49,7 @@ return (
         <label>
             Size
           <select
+          id='size-dropdown'
             name='size'
             value={values.size}
             onChange={onChange}
@@ -152,15 +151,16 @@ return (
         <div className="request">
             <label>Special Request
                 <textarea
+                id='special-text'
                 type='text'
-                 name='describe'
+                 name='special'
                  onChange={onChange} 
                  rows="4"
                  cols="50"
                   />
             </label>
         </div>
-        <button id={'submitButton'} disabled={disabled}>Submit</button>
+        <button id={'order-button'} disabled={disabled}>Order Now</button>
         
     </form>
     )
