@@ -6,10 +6,8 @@ const Home = () => {
 const history = useHistory();
 
 const orderNow = () => {
-    history.push('/build-pizza')
+    history.push('/pizza')
 }
-
-
     return (
        <div className='home-order'>
            <button onClick={orderNow}>Order Now!</button>
