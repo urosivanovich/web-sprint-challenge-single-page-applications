@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Link} from 'react-router-dom'
+import { Switch, Route, Link, useHistory} from 'react-router-dom'
 import Home from "./Home";
 import Orders from "./Orders";
 import BuildPizza from "./BuildPizza";
@@ -15,9 +15,7 @@ const initialFormValues = {
   size: '',
 //radio  
   sauce: '',
-//big text input
-  request: '',
-// checkboxes
+  // checkboxes
   pepperoni: false,
   sausage: false,
   bacon: false,
@@ -25,6 +23,8 @@ const initialFormValues = {
   artichoke: false,
   olives: false,
   extraCheese: false,
+  //big text input
+    request: '',
 }
 
 const initialFormErrors = {
@@ -42,8 +42,10 @@ const [formErrors, setFormErrors] = useState(initialFormErrors)
 const [disabled, setDisabled] = useState(initialDisabled)
 
 const inputChange = (name, value) => {
-  setFormValues({[name]: value, ...formValues})
+  setFormValues({...formValues, [name]: value})
 }
+
+const history = useHistory();
 
 const postNewOrder = newOrder => {
   axios.post('https://reqres.in/api/orders', newOrder)
@@ -52,7 +54,9 @@ const postNewOrder = newOrder => {
   })
   .catch(err => console.log(err))
   .finally(() => setFormValues(initialFormValues))
+  history.push('/Orders')
 }
+
 
 const formSubmit = () => {
   const newOrder = {
@@ -64,6 +68,7 @@ const formSubmit = () => {
     .filter(topping => formValues[topping])
   }
   postNewOrder(newOrder)
+  
 }
 
 
@@ -88,7 +93,11 @@ const formSubmit = () => {
         errors={formErrors} />
       </Route>
       <Route path='/orders'>
-        <Orders orders={orders} />
+        {orders.map(order => {
+          return (
+            <Orders key={order.id} orders={order} />
+          )
+        })}
       </Route>
       <Route path='/'>
         <Home />
