@@ -12,7 +12,7 @@ const history = useHistory()
 const onSubmit = evt => {
     evt.preventDefault()
     submit()
-    history.push('/orders')
+    // history.push('/orders')
 }
 
 const onChange = evt => {
@@ -39,19 +39,21 @@ return (
         <label>
             Customer
             <input
+            id='name-input'
              value={values.name}
              onChange={onChange} 
              name='name'
              type='text'
              />
         </label>
+    <div>
 
         <label>
             Size
           <select
-            onChange={onChange}
-            value={values.sauce}
             name='size'
+            value={values.size}
+            onChange={onChange}
           >
             <option value=''>--Select an option--</option>
             <option value='small'>Small</option>
@@ -59,6 +61,7 @@ return (
             <option value='large'>Large</option>
           </select>
         </label>
+    </div>
 
         <div className='sauces'>
             <h4>Choose Sauce</h4>

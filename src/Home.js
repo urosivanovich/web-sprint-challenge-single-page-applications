@@ -10,7 +10,7 @@ const orderNow = () => {
 }
     return (
        <div className='home-order'>
-           <button onClick={orderNow}>Order Now!</button>
+           <button id='order-button' onClick={orderNow}>Order Now!</button>
        </div> 
     )
 }
