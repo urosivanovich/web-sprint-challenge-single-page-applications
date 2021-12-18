@@ -126,7 +126,7 @@ useEffect(() => {
           )
         })}
       </Route>
-      <Route path='/'>
+      <Route path='/' id='order-pizza'>
         <Home />
       </Route>
     </Switch>
