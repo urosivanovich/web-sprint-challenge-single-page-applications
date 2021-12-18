@@ -9,8 +9,9 @@ function Orders ({orders}) {
         <p>Size:{orders.size}</p>
         <p>Sauce:{orders.sauce}</p>
         <div>
+            {/**toppings won't render */}
           Toppings:
-            {orders.toppings.map((topping, idx) => { return <p key={idx}>{orders.topping}</p>})}
+            {orders.toppings.map((topping, idx) => { return (<p key={idx}>{orders.topping}</p>)})}
           
         </div>
         <p>Special Request:{orders.special}</p>

@@ -9,7 +9,7 @@ const BuildPizza = (props) => {
 
 const onSubmit = evt => {
     evt.preventDefault()
-    submit(onSubmit)
+    submit()
    
 }
 
@@ -37,7 +37,7 @@ return (
         <label>
             Customer
             <input
-            id='name-input'
+            id='name'
              value={values.name}
              onChange={onChange} 
              name='name'
@@ -133,6 +133,7 @@ return (
             </label>
             <label>Olives
                 <input
+                    id='olives'
                     type='checkbox'
                     name='olives'
                     checked={values.olives}
