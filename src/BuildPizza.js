@@ -37,7 +37,7 @@ return (
         <label>
             Customer
             <input
-            id='name'
+            id='name-input'
              value={values.name}
              onChange={onChange} 
              name='name'

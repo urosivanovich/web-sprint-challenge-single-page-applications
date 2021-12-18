@@ -5,8 +5,6 @@ describe ('Pizza App', () => {
 
     const nameInput = () => cy.get('input[name=name]')
     const button = () => cy.get('button[id="order-button"]');
-    const select = () => cy.get('select[name=size]')
-    const sauce = () => cy.get('input[name=sauce]')
     const olives = () => cy.get('input[name=name]');
    
     
@@ -29,6 +27,10 @@ describe ('Pizza App', () => {
 
     it('submit button start out disabled', () => {
         button().should('be.disabled')
+    })
+    
+    it('olives checked', () => {
+        olives().click()
     })
     
 
